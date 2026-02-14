@@ -1,0 +1,37 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  username: postgres
+  password: <%= ENV.fetch("DB_PASSWORD", "") %>
+  pool: 5
+
+
+development:
+  <<: *default
+  database: kanban_app_development
+
+
+test:
+  <<: *default
+  database: kanban_app_test
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: kanban_app_production
+    username: kanban_app
+    password: <%= ENV["KANBAN_APP_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: kanban_app_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: kanban_app_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: kanban_app_production_cable
+    migrations_paths: db/cable_migrate
