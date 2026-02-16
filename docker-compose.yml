@@ -21,6 +21,7 @@ services:
     user: "1000:1000"
     volumes:
       - .:/rails
+      - bundle_data:/rails/vendor/bundle
     ports:
       - "3000:3000"
     environment:
@@ -37,6 +38,7 @@ services:
     user: "1000:1000"
     volumes:
       - .:/rails
+      - bundle_data:/rails/vendor/bundle
     environment:
       DB_HOST: db
       DB_PASSWORD: password
@@ -48,3 +50,4 @@ services:
 volumes:
   postgres_data:
   redis_data:
+  bundle_data:
