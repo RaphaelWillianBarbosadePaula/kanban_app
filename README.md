@@ -101,12 +101,34 @@ docker compose run --rm kanban_app bundle exec rails db:create
 docker compose run --rm kanban_app bundle exec rails db:migrate
 ```
 
+Para testes, caso não tenha banco de dados criado:
+```bash
+docker compose run --rm kanban_app bundle exec rails db:create RAILS_ENV=test
+docker compose run --rm kanban_app bundle exec rails db:migrate RAILS_ENV=test
+```
+
 ---
 
 ## 6️⃣ Acessar a aplicação
 
 Acesse o sistema principal em: **[http://localhost:3000](http://localhost:3000)**
 Acesse o painel do sidekiq em: **[http://localhost:3000/sidekiq](http://localhost:3000/sidekiq)**
+
+---
+
+## Utilizar Rubocop para subir alguma branch
+
+```bash
+docker-compose run --rm kanban_app bundle exec rubocop
+```
+
+---
+
+## Para testes unitários rode:
+
+```bash
+docker-compose run --rm kanban_app bundle exec rpsec
+```
 
 ---
 
