@@ -5,23 +5,14 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
 
   redis:
     image: redis:7
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
 
   kanban_app:
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
-    user: "1000:1000"
     volumes:
       - .:/rails
-      - bundle_data:/rails/vendor/bundle
     ports:
       - "3000:3000"
     environment:
@@ -35,10 +26,8 @@ services:
   sidekiq:
     build: .
     command: bundle exec sidekiq
-    user: "1000:1000"
     volumes:
       - .:/rails
-      - bundle_data:/rails/vendor/bundle
     environment:
       DB_HOST: db
       DB_PASSWORD: password
@@ -49,5 +38,3 @@ services:
 
 volumes:
   postgres_data:
-  redis_data:
-  bundle_data:
