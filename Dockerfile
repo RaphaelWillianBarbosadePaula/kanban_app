@@ -1,28 +1,38 @@
 FROM ruby:3.4
 
+# Dependências do sistema
 RUN apt-get update -qq && apt-get install -y \
   postgresql-client \
   build-essential \
-  libvips
+  libvips \
+  && rm -rf /var/lib/apt/lists/*
+
+# Cria usuário igual ao host
+RUN useradd -m -u 1000 app
 
 WORKDIR /rails
 
-ENV RAILS_ENV=development
-ENV BUNDLE_PATH=/rails/vendor/bundle
-ENV BUNDLE_BIN=/rails/vendor/bundle/bin
-ENV GEM_HOME=/rails/vendor/bundle
-ENV PATH="/rails/vendor/bundle/bin:${PATH}"
+# Variáveis do Bundler
+ENV BUNDLE_PATH=/bundle
+ENV BUNDLE_BIN=/bundle/bin
+ENV GEM_HOME=/bundle
+ENV PATH="/bundle/bin:${PATH}"
 
-
+# Copia Gemfile antes (cache)
 COPY Gemfile Gemfile.lock ./
+
+# Instala gems como root
 RUN bundle install
 
+# Copia o código
 COPY . .
+
+# Dá permissão pro usuário
+RUN chown -R app:app /rails /bundle
+
+# Troca pro usuário não-root
+USER app
 
 EXPOSE 3000
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
