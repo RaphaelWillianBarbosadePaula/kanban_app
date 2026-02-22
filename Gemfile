@@ -38,6 +38,7 @@ group :development, :test do
   gem "machinist"
   gem "blueprinter"
   gem "faker"
+  gem "byebug"
 end
 
 group :development do

@@ -3,7 +3,8 @@ require "sidekiq/web"
 Rails.application.routes.draw do
   resources :users
 
-  post "/auth/login", to: "authentication#login"
+  post "/login", to: "authentication#login", as: :login
+  delete "/logout", to: "authentication#logout", as: :logout
 
   root "home#index"
   mount Sidekiq::Web => "/sidekiq"
