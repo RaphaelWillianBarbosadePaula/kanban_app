@@ -9,6 +9,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 gem "bcrypt", "~> 3.1.7"
+gem "jwt", "~> 3.1.2"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

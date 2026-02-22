@@ -3,8 +3,8 @@ require "sidekiq/web"
 Rails.application.routes.draw do
   resources :users
 
-  root "home#index"
+  post "/auth/login", to: "authentication#login"
 
-  # Painel do Sidekiq
+  root "home#index"
   mount Sidekiq::Web => "/sidekiq"
 end
