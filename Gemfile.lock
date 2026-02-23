@@ -87,6 +87,8 @@ GEM
     brakeman (8.0.2)
       racc
     builder (3.3.0)
+    byebug (13.0.0)
+      reline (>= 0.6.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -136,6 +138,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.18.1)
+    jwt (3.1.2)
+      base64
     kamal (2.10.1)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -415,11 +419,13 @@ DEPENDENCIES
   blueprinter
   bootsnap
   brakeman
+  byebug
   capybara
   debug
   factory_bot_rails
   faker
   importmap-rails
+  jwt (~> 3.1.2)
   kamal
   machinist
   pg (~> 1.1)
