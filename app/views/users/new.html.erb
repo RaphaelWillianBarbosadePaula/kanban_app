@@ -1,0 +1,53 @@
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+      Crie sua conta no KanbanRails
+    </h2>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
+      
+      <%# Diferença aqui: Usamos model: @user em vez de url %>
+      <%= form_with model: @user, local: true, class: "space-y-6" do |f| %>
+        
+        <div>
+          <%= f.label :name, "Nome Completo", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.text_field :name, autofocus: true, required: true, 
+                class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base px-2 py-2" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :email, "E-mail", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.email_field :email, required: true, 
+                class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base px-2 py-2" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :password, "Senha", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1">
+            <%= f.password_field :password, required: true,
+                class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base px-2 py-2" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.submit "Cadastrar", 
+              class: "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none transition" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6 text-center">
+        <p class="text-sm text-gray-600">
+          Já tem uma conta? 
+          <%= link_to "Faça login aqui", login_path, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -24,8 +24,18 @@
           </div>
 
           <div class="flex items-center space-x-4">
-             <%= link_to "Login", "#", class: "text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium" %>
-             <%= link_to "Criar Conta", "#", class: "bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium transition" %>
+            <% if @current_user.present? %>
+              <div class="flex items-center space-x-4">
+                <%= link_to "Meu Perfil", user_path(@current_user), 
+                    class: "text-gray-500 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition" %>
+                
+                <%= button_to "Sair", logout_path, method: :delete, 
+                    class: "text-red-500 hover:text-red-700 px-3 py-2 text-sm font-medium transition" %>
+              </div>
+            <% else %>
+              <%= link_to "Login", login_path, class: "text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium" %>
+              <%= link_to "Criar Conta", signup_path, class: "bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md text-sm font-medium transition" %>
+            <% end %>
           </div>
         </div>
       </div>
