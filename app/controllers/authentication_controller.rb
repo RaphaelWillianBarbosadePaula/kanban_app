@@ -1,5 +1,5 @@
 class AuthenticationController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:login]
+  skip_before_action :verify_authenticity_token, only: [ :login ]
   # before_action :authorize_request, only: %i[ logout ]
 
   def login
@@ -15,11 +15,11 @@ class AuthenticationController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { 
+        format.html {
           flash.now[:alert] = "Email ou senha incorretos."
           render :new, status: :unprocessable_entity
         }
-        format.json { render json: { error: 'Incorreto' }, status: :unauthorized }
+        format.json { render json: { errors: "Incorreto" }, status: :unauthorized }
       end
     end
   end

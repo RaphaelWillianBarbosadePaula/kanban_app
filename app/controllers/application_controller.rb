@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
       if BlacklistedToken.exists?(token: @current_token)
         session[:jwt_token] = nil
         redirect_to login_path, alert: "Sua sessão expirou."
-        return
       end
     rescue ActiveRecord::RecordNotFound
       session[:jwt_token] = nil
@@ -34,7 +33,7 @@ class ApplicationController < ActionController::Base
     if @current_user.nil?
       respond_to do |format|
         format.html { redirect_to login_path, alert: "Você precisa fazer login." }
-        format.json { render json: { error: 'Não autorizado' }, status: :unauthorized }
+        format.json { render json: { errors: "Não autorizado" }, status: :unauthorized }
       end
     end
   end

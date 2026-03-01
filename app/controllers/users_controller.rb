@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: @user, except: [:password_digest] }
+      format.json { render json: @user, except: [ :password_digest ] }
     end
   end
 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if @user.save
       respond_to do |format|
         format.html { redirect_to login_path, notice: "Conta criada com sucesso! Faça login." }
-        format.json { render json: @user, status: :created, except: [:password_digest] }
+        format.json { render json: @user, status: :created, except: [ :password_digest ] }
       end
     else
       respond_to do |format|
