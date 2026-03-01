@@ -20,10 +20,6 @@ RSpec.describe AuthenticationController, type: :controller do
       it "shows an error" do
         post :login, params: { email: 'wrong@gmail.com', password: 'wrongpassword123' }
 
-        # While view is not ready it checks if returns to the login path again.
-        # Should be deleted after view creation
-        expect(response).to redirect_to(login_path)
-
         expect(flash.now[:alert]).to eq("Email ou senha incorretos.")
       end
     end

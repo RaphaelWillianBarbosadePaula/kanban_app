@@ -1,0 +1,52 @@
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+      Login
+    </h2>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
+      <%= form_with url: login_path, local: true, class: "space-y-6" do |f| %>
+        
+        <div>
+          <%= f.label :email, "Endereço de e-mail", class: "block text-base font-medium text-gray-700 py-4" %>
+          <div class="mt-1">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, 
+              class: "block w-full rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base px-2 py-2" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :password, "Senha", class: "block text-base font-medium text-gray-700 py-4" %>
+          <div class="mt-1">
+            <%= f.password_field :password, autocomplete: "current-password", required: true,
+              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base px-2 py-2" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.submit "Entrar", 
+            class: "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          
+          <div class="relative flex justify-center text-sm">
+            <span class="bg-white px-2 text-gray-500">Novo no KanbanRails?</span>
+          </div>
+        </div>
+
+        <div class="mt-6 text-center">
+          <%= link_to "Criar uma conta gratuita", signup_path, 
+          class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
