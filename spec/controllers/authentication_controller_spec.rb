@@ -64,7 +64,7 @@ RSpec.describe AuthenticationController, type: :controller do
       it "redirects to login" do
         delete :logout
 
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

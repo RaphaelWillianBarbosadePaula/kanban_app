@@ -20,6 +20,7 @@ RSpec.describe UsersController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       user = User.create! valid_attributes
+      session[:jwt_token] = JsonWebToken.encode(user_id: user.id)
       get :show, params: { id: user.to_param }
       expect(response).to be_successful
     end
@@ -34,7 +35,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it "renders a response with new user in JSON" do
-          post :create, params: { user: valid_attributes }
+          post :create, params: { user: valid_attributes, format: :json }
           expect(response).to have_http_status(:created)
           expect(response.location).to eq(user_url(User.last))
           expect(response.content_type).to eq('application/json; charset=utf-8')
@@ -43,7 +44,7 @@ RSpec.describe UsersController, type: :controller do
 
     context "invalid attributes" do
       it "renders a response with errors for new user in JSON" do
-        post :create, params: { user: invalid_attributes }
+        post :create, params: { user: invalid_attributes, format: :json }
         expect(response).to have_http_status(:unprocessable_content)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -58,13 +59,15 @@ RSpec.describe UsersController, type: :controller do
 
       it "updates the requested user" do
         user = User.create! valid_attributes
+        session[:jwt_token] = JsonWebToken.encode(user_id: user.id)
         put :update, params: { id: user.to_param, user: new_attributes }
         expect(user.reload.name).to eq(new_attributes[:name])
       end
 
       it "renders a response with user in JSON" do
         user = User.create! valid_attributes
-        put :update, params: { id: user.to_param, user: new_attributes }
+        session[:jwt_token] = JsonWebToken.encode(user_id: user.id)
+        put :update, params: { id: user.to_param, user: new_attributes, format: :json }
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -73,7 +76,8 @@ RSpec.describe UsersController, type: :controller do
     context "invalid attributes" do
       it "renders a response with errors for user in JSON" do
         user = User.create! valid_attributes
-        put :update, params: { id: user.to_param, user: invalid_attributes }
+        session[:jwt_token] = JsonWebToken.encode(user_id: user.id)
+        put :update, params: { id: user.to_param, user: invalid_attributes, format: :json }
         expect(response).to have_http_status(:unprocessable_content)
         expect(response.content_type).to eq('application/json; charset=utf-8')
       end
@@ -83,6 +87,7 @@ RSpec.describe UsersController, type: :controller do
   describe "DELETE #destroy" do
     it "deletes the requested user" do
       user = User.create! valid_attributes
+      session[:jwt_token] = JsonWebToken.encode(user_id: user.id)
       expect {
         delete :destroy, params: { id: user.to_param }
       }.to change(User, :count).by(-1)
