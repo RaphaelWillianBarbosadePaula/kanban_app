@@ -8,6 +8,12 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'associations' do
+    it { is_expected.to have_many(:created_projects).class_name('Project').with_foreign_key('created_by_id') }
+    it { is_expected.to have_many(:project_memberships).dependent(:destroy) }
+    it { is_expected.to have_many(:projects).through(:project_memberships) }
+  end
+
   describe 'validations' do
     it 'is invalid without a name' do
       user = build(:user, name: nil)

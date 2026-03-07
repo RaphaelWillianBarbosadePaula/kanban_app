@@ -39,6 +39,7 @@ group :development, :test do
   gem "blueprinter"
   gem "faker"
   gem "byebug"
+  gem "shoulda-matchers"
 end
 
 group :development do
