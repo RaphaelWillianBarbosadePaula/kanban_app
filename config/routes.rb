@@ -2,6 +2,7 @@ require "sidekiq/web"
 
 Rails.application.routes.draw do
   resources :users
+  resources :projects
 
   get "/signup", to: "users#new", as: :signup
   get "/login", to: "authentication#new", as: :login
