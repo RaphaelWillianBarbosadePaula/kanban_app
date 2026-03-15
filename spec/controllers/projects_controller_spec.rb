@@ -12,7 +12,7 @@ RSpec.describe ProjectsController, type: :controller do
   }
 
   before do
-    allow_any_instance_of(ApplicationController).to receive(:authenticate_user) do
+    allow_any_instance_of(ApplicationController).to receive(:authenticate_user!) do
       controller.instance_variable_set(:@current_user, user)
     end
   end

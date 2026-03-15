@@ -11,10 +11,6 @@ class ProjectsController < ApplicationController
   def show
     render json: @project
   end
-  
-  def new
-    @project = Project.new
-  end
 
   def edit
   end
@@ -24,29 +20,18 @@ class ProjectsController < ApplicationController
     @project.creator = @current_user
 
     if @project.save
-      @project.project_memberships.create!(user: @current_user, role: 'owner')
-
-      respond_to do |format|
-        format.json { render json: @project, location: @project, status: :created }
-      end
+      @project.project_memberships.create!(user: @current_user, role: "owner")
+      render json: @project, status: :created, location: @project
     else
-      respond_to do |format|
-        format.json { render json: { errors: @project.errors }, status: :unprocessable_entity }
-      end
+      render json: { errors: @project.errors }, status: :unprocessable_entity
     end
   end
 
   def update
     if @project.update(project_params)
-      respond_to do |format|
-        format.html
-        format.json { render json: @project, status: :ok }
-      end
+      render json: @project, status: :ok
     else
-      respond_to do |format|
-        format.html
-        format.json { render json: { errors: @project.errors }, status: :unprocessable_entity }
-      end
+      render json: { errors: @project.errors }, status: :unprocessable_entity
     end
   end
 
