@@ -22,4 +22,11 @@ FactoryBot.define do
     association :project
     role { "member" }
   end
+
+  factory :invitation do
+    email {  Faker::Internet.unique.email }
+    association :project
+    association :sender, factory: :user
+    status { "pending" }
+  end
 end
