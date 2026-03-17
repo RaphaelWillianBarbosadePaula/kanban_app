@@ -1,0 +1,69 @@
+class ProjectsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_project, only: %i[ show edit update destroy index_members]
+  before_action :authorize_member!, only: %i[ show edit update destroy index_members ]
+
+  def index
+    @projects = @current_user.projects
+    render json: @projects
+  end
+
+  def show
+    render json: @project
+  end
+
+  def new
+    @project = Project.new
+  end
+
+  def edit
+  end
+
+  def create
+    @project = Project.new(project_params)
+    @project.creator = @current_user
+
+    if @project.save
+      @project.project_memberships.create!(user: @current_user, role: "owner")
+      render json: @project, status: :created, location: @project
+    else
+      render json: { errors: @project.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @project.update(project_params)
+      render json: @project, status: :ok
+    else
+      render json: { errors: @project.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @project.destroy!
+  end
+
+  def index_members
+    @memberships = @project.project_memberships.includes(:user)
+    render json: @memberships.as_json(
+      include: { user: { only: [ :id, :name, :email ] } },
+      only: [ :id, :role ]
+    )
+  end
+
+  private
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  def project_params
+    params.require(:project).permit(:name, :description)
+  end
+
+  def authorize_member!
+    unless @project.users.include?(@current_user)
+      redirect_to root_path, alert: "Você não tem permissão para acessar este projeto."
+    end
+  end
+end

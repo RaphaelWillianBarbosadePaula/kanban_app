@@ -40,6 +40,8 @@ group :development, :test do
   gem "faker"
   gem "byebug"
   gem "shoulda-matchers"
+  gem "letter_opener"
+  gem "letter_opener_web", "~> 3.0" # Versão com interface para navegador
 end
 
 group :development do

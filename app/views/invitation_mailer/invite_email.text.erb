@@ -1,0 +1,8 @@
+Olá!
+
+<%= @sender.name %> convidou você para colaborar no projeto <%= @project.name %> no Kanban App.
+
+Para aceitar o convite, acesse o endereço abaixo:
+<%= @url %>
+
+Este convite expira em: <%= l(@invitation.expires_at, format: :long) %>
