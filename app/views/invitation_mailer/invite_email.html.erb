@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Olá!</h1>
+    <p>
+      <%= @sender.name %> convidou você para colaborar no projeto 
+      <strong><%= @project.name %></strong> no Kanban App.
+    </p>
+    <p>Para aceitar o convite, clique no link abaixo:</p>
+    <p>
+      <%= link_to 'Aceitar Convite', @url %>
+    </p>
+    <p>Este convite expira em: <%= l(@invitation.expires_at, format: :long) %></p>
+    <p>Se você não esperava este convite, pode ignorar este e-mail.</p>
+  </body>
+</html>
