@@ -44,10 +44,10 @@ class ProjectsController < ApplicationController
   end
 
   def index_members
-    @memberships = @project.project_memberships.includes(:user)  
+    @memberships = @project.project_memberships.includes(:user)
     render json: @memberships.as_json(
-      include: { user: { only: [:id, :name, :email] } }, 
-      only: [:id, :role]
+      include: { user: { only: [ :id, :name, :email ] } },
+      only: [ :id, :role ]
     )
   end
 

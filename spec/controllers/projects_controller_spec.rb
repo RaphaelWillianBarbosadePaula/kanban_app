@@ -88,7 +88,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     it "retorna com sucesso a lista de membros" do
       get :index_members, params: { id: project[:id] }
-      
+
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json.first["user"]["name"]).to eq('Jose')
