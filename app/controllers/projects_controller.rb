@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: %i[ show edit update destroy ]
-  before_action :authorize_member!, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[ show edit update destroy index_members]
+  before_action :authorize_member!, only: %i[ show edit update destroy index_members ]
 
   def index
     @projects = @current_user.projects
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
   end
-  
+
   def edit
   end
 
@@ -41,6 +41,14 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.destroy!
+  end
+
+  def index_members
+    @memberships = @project.project_memberships.includes(:user)  
+    render json: @memberships.as_json(
+      include: { user: { only: [:id, :name, :email] } }, 
+      only: [:id, :role]
+    )
   end
 
   private

@@ -12,9 +12,8 @@ RSpec.describe ProjectsController, type: :controller do
   }
 
   before do
-    allow_any_instance_of(ApplicationController).to receive(:authenticate_user!) do
-      controller.instance_variable_set(:@current_user, user)
-    end
+    session[:jwt_token] = JsonWebToken.encode(user_id: user.id)
+    allow(controller).to receive(:current_user).and_return(user)
   end
 
   describe "GET #index" do
@@ -77,6 +76,22 @@ RSpec.describe ProjectsController, type: :controller do
       expect {
         delete :destroy, params: { id: project.to_param }
       }.to change(Project, :count).by(-1)
+    end
+  end
+
+  describe "GET #index_members" do
+    let(:project) { Project.create!(name: 'Projeto Teste', description: 'Desc', creator: user) }
+
+    before do
+      project.project_memberships.create!(user: user, role: 'owner')
+    end
+
+    it "retorna com sucesso a lista de membros" do
+      get :index_members, params: { id: project[:id] }
+      
+      expect(response).to have_http_status(:ok)
+      json = JSON.parse(response.body)
+      expect(json.first["user"]["name"]).to eq('Jose')
     end
   end
 end
